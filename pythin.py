@@ -34,7 +34,6 @@ def test_package(package_name: str, import_name: str = None) -> Tuple[str, bool,
         return (package_name, False, f"Error: {str(e)}")
 
 def main():
-    """Test all packages found in your NixOS system"""
     
     print("🔍 Testing Python packages in your NixOS system...")
     print("=" * 60)
@@ -68,6 +67,12 @@ def main():
         
         ("Meson", "mesonbuild"),
         
+        ("Conda", "conda"),
+        ("Anaconda Navigator", "anaconda_navigator"),
+        ("Anaconda Client", "binstar_client"),
+        ("Conda-Pack", "conda_pack"),
+        ("Conda-Build", "conda_build"),
+
         ("JSON", "json"),
         ("OS", "os"),
         ("Sys", "sys"),
@@ -93,14 +98,14 @@ def main():
     print("-" * 40)
     for name, success, version in results:
         if success:
-            print(f"  {name:<15} | Version: {version}")
+            print(f"  {name:<20} | Version: {version}")
     
     if failed > 0:
         print("\n❌ FAILED IMPORTS:")
         print("-" * 40)
         for name, success, error in results:
             if not success:
-                print(f"  {name:<15} | {error}")
+                print(f"  {name:<20} | {error}")
     
     print("\n" + "=" * 60)
     print(f"📊 SUMMARY:")
@@ -140,6 +145,12 @@ def main():
         print(f"  ✅ Pandas DataFrame creation: {len(df)} rows")
     except:
         print(f"  ❌ Pandas test failed")
+
+    try:
+        import conda
+        print(f"  ✅ Conda ready (version: {conda.__version__})")
+    except:
+        print(f"  ❌ Conda test failed")
 
 if __name__ == "__main__":
     main()
